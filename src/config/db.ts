@@ -9,5 +9,27 @@ const sequelize = new Sequelize({
   password: process.env.DATABASE_PASSWORD,
   database: process.env.DATABASE_NAME,
 });
+// Kiểm tra kết nối xog nhớ // hết
+const syncDatabase = async () => {
+  try {
+    await sequelize.sync({ force: true }); 
+    console.log('Database synchronized successfully.');
+  } catch (err) {
+    console.error('Error synchronizing database:', err);
+  }
+};
+
+// Kiểm tra kết nối
+sequelize
+  .authenticate()
+  .then(async () => {
+    console.log('Connection has been established successfully.');
+    if (process.env.SYNC_DB === 'true') {
+      await syncDatabase();
+    }
+  })
+  .catch((err) => {
+    console.error('Unable to connect to the database:', err);
+  });
 
 export default sequelize;

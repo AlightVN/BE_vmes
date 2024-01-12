@@ -3,8 +3,9 @@ import { Router } from 'express';
 import * as UserController from '../controllers/userController';
 
 const router = Router();
+//User
+router.get('/users', UserController.getAllUsers);
+router.post('users/', UserController.createUser);
 
-router.get('/', UserController.getAllUsers);
-// Thêm các route khác như create, read, update, delete ở đây
 
 export default router;
